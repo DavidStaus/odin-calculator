@@ -17,7 +17,7 @@ function multiply(num1, num2) {
 }
 
 function divide(num1, num2) {
-    if (num1 == 0 || num2 == 0) {
+    if (num1 === 0 || num2 === 0) {
         alert(`Don't you fucking dare, motherfucker!`);
         return;
     }
@@ -53,6 +53,7 @@ function operate(e) {
     }
     saveNum();
     saveOperation(e);
+    display.text
 }
 
 function calculate() {
@@ -73,9 +74,9 @@ function calculate() {
     operation = ''
 }
 
-let previousNumber;
-let currentNumber;
-let operation;
+let previousNumber = null;
+let currentNumber = null;
+let operation = null;
 
 const display = document.querySelector('#displayNumbers');
 const numbers = document.querySelectorAll('.number');

@@ -20,7 +20,7 @@ h1 {
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    padding: 5%;
+    padding: 50px;
     gap: 25px;
     width: 600px;
 }

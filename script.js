@@ -6,7 +6,7 @@ function add(num1, num2) {
 
 function subtract(num1, num2) {
     let result = num1 - num2;
-    display.textContent(result)
+    console.log(result)
     return result;
 }
 
@@ -19,7 +19,7 @@ function multiply(num1, num2) {
 function divide(num1, num2) {
     if (num1 === 0 || num2 === 0) {
         alert(`Don't you fucking dare, motherfucker!`);
-        return;
+        return 0;
     }
     let result = num1 / num2
     console.log(result)
@@ -27,20 +27,34 @@ function divide(num1, num2) {
 }
 
 function type(e) {
-    if (display.textContent === '0') {
-        display.textContent = ''
+    if (displayValue === '0') {
+        displayValue = '';
     }
-    display.textContent += e.target.textContent;
+    displayValue += e.target.textContent;
+    updateDisplay();
+}
+
+function decimal() {
+    if (displayValue.includes('.')) {
+        return;
+    }
+    if (displayValue === '') {
+        displayValue = '0';
+    }
+    displayValue += '.';
+    updateDisplay();
 }
 
 function clear() {
-    display.textContent = '';
+    displayValue = '0';
     operation = ''
+    updateDisplay();
 }
 
 function saveNum() {
-    previousNumber = parseInt(display.textContent);
-    display.textContent = '';
+    previousNumber = +displayValue;
+    displayValue = '';
+    updateDisplay();
 }
 
 function saveOperation(e) {
@@ -49,41 +63,63 @@ function saveOperation(e) {
 
 function operate(e) {
     if (operation) {
+        if (!currentNumber) {
+            saveOperation(e);
+            displayValue = '';
+            return;
+        }
         calculate()
     }
     saveNum();
     saveOperation(e);
-    display.text
+    displayValue = '';
+    updateDisplay();
 }
 
 function calculate() {
-    currentNumber = parseInt(display.textContent);
+    currentNumber = +displayValue;
     // console.log(`${previousNumber} and ${currentNumber}`)
     if (operation === '+') {
-        display.textContent = add(previousNumber, currentNumber);
+        displayValue = add(previousNumber, currentNumber);
     }
     if (operation === '-') {
-        display.textContent = subtract(previousNumber, currentNumber)
+        displayValue = subtract(previousNumber, currentNumber)
     }
     if (operation === 'x') {
-        display.textContent = multiply(previousNumber, currentNumber)
+        displayValue = multiply(previousNumber, currentNumber)
     }
     if (operation === '/') {
-        display.textContent = divide(previousNumber, currentNumber)
+        displayValue = divide(previousNumber, currentNumber)
     }
     operation = ''
+    updateDisplay();
+}
+
+function updateDisplay() {
+    const display = document.getElementById('displayNumbers');
+    if (displayValue == 'undefined') {
+        displayValue = '0';
+    }
+    display.textContent = displayValue;
+    if (displayValue.length > 25) {
+        display.textContent = displayValue.substring(0, 25);
+    }
 }
 
 let previousNumber = null;
 let currentNumber = null;
 let operation = null;
+let displayValue = '0';
+updateDisplay();
 
-const display = document.querySelector('#displayNumbers');
 const numbers = document.querySelectorAll('.number');
 numbers.forEach((element) => element.addEventListener('click', type));
 
+const decimalDot = document.querySelector('#dot');
+decimalDot.addEventListener('click', decimal);
+
 const clearBtn = document.querySelector('#clear');
-clearBtn.addEventListener('click', clear)
+clearBtn.addEventListener('click', clear);
 
 const operators = document.querySelectorAll('.operator')
 operators.forEach((button) => button.addEventListener('click', operate)); 
@@ -91,3 +127,30 @@ operators.forEach((button) => button.addEventListener('click', operate));
 const equal = document.querySelector('#equal');
 equal.addEventListener('click', calculate);
 
+window.addEventListener('keydown', (e) => {
+    if (e.key >= 0 && e.key <= 9) {
+        if (displayValue === '0' || displayValue === 0) {
+            displayValue = '';
+        }
+        displayValue += e.key;
+        updateDisplay();
+    } else if (e.key === '/' 
+        || e.key === '*' 
+        || e.key === '+' 
+        || e.key === '-' ) {
+        e.preventDefault();
+        document.getElementById(`${e.key}`).click();
+    } else if (e.key === 'Enter') {
+        equal.click();
+    } else if (e.key === 'Delete') {
+        clearBtn.click();
+    } else if (e.key === 'Backspace') {
+        displayValue = displayValue.slice(0, -1);
+        if (displayValue === '') {
+            displayValue = '0'
+        }
+    } else if (e.key === '.' || e.key === ',') {
+        decimalDot.click()
+    }
+    console.log(e);
+})

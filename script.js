@@ -128,6 +128,8 @@ const equal = document.querySelector('#equal');
 equal.addEventListener('click', calculate);
 
 window.addEventListener('keydown', (e) => {
+    if (e.repeat) return;
+
     if (e.key >= 0 && e.key <= 9) {
         if (displayValue === '0' || displayValue === 0) {
             displayValue = '';
@@ -152,5 +154,35 @@ window.addEventListener('keydown', (e) => {
     } else if (e.key === '.' || e.key === ',') {
         decimalDot.click()
     }
-    console.log(e);
+
+    const key = document.querySelector(`button[data-key="${e.key}"]`)
+    if (key) {
+        key.classList.add('pressed');
+    }
+
+    console.log(key);
 })
+
+// styling
+const allButtons = document.querySelectorAll('button');
+allButtons.forEach(button => {
+    button.addEventListener('mousedown', () => {
+        button.classList.add('pressed');
+    });
+    
+    button.addEventListener('mouseup', () => {
+        button.classList.remove('pressed');
+    });
+    
+    // Handle case when mouse leaves button while pressed
+    button.addEventListener('mouseleave', () => {
+        button.classList.remove('pressed');
+    });
+});
+
+window.addEventListener('keyup', (e) => {
+    const key = document.querySelector(`button[data-key="${e.key}"]`);
+    if (key) {
+        key.classList.remove('pressed');
+    }
+});

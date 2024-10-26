@@ -4,6 +4,7 @@
     box-sizing: border-box;
 }
 
+
 :root {
     font-size: 16px;
 }
@@ -60,8 +61,24 @@ h1 {
     flex: auto;
 }
 
+.btn,
+.operator {
+    background-color: #9b9b9b;
+}
+
 button {
     width: 100px;
     font-size: 2rem;
     background-color: #cfcfcf;
+    border: black 2px solid;
+}
+/* 
+button:active {
+    background-color: rgb(140, 222, 255);
+    box-shadow: inset 2px 2px 10px rgb(94, 157, 182);
+} */
+
+.pressed {
+    background-color: rgb(140, 222, 255);
+    box-shadow: inset 2px 2px 10px rgb(94, 157, 182);
 }

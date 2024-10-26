@@ -144,7 +144,7 @@ window.addEventListener('keydown', (e) => {
         document.getElementById(`${e.key}`).click();
     } else if (e.key === 'Enter') {
         equal.click();
-    } else if (e.key === 'Delete') {
+    } else if (e.key === 'Delete' || e.key === 'Escape') {
         clearBtn.click();
     } else if (e.key === 'Backspace') {
         displayValue = displayValue.slice(0, -1);

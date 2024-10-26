@@ -9,13 +9,13 @@
     font-size: 16px;
 }
 
-h1 {
-    text-align: center;
-    margin: 20px 0;
+body {
+    background-color:rgba(133, 70, 192, 0.664)
 }
 
+
 .calcbody {
-    margin: 0 auto;
+    margin: 4rem auto;
     background-color: #f4f4f4;
     display: flex;
     flex-direction: column;
@@ -24,6 +24,8 @@ h1 {
     padding: 50px;
     gap: 25px;
     width: 600px;
+    border: black solid 4px;
+    border-radius: 20px;
 }
 
 .display {
@@ -71,14 +73,45 @@ button {
     font-size: 2rem;
     background-color: #cfcfcf;
     border: black 2px solid;
+    transition: all 0.1s;
+    border-radius: 8px;
+}
+
+.number:hover:not(.pressed) {
+    background-color: #e2e2e2;
+}
+
+.operator:hover:not(.pressed),
+.btn:hover:not(.pressed) {
+    background-color: #b8b8b8;
+}
+
+#clear:hover:not(.pressed) {
+    background-color: rgb(253, 156, 156);
+}
+
+#equal:hover:not(.pressed) {
+    background-color: rgb(156, 253, 169);
 }
 /* 
 button:active {
     background-color: rgb(140, 222, 255);
     box-shadow: inset 2px 2px 10px rgb(94, 157, 182);
 } */
-
-.pressed {
+.btn.pressed,
+.operator.pressed,
+.number.pressed {
     background-color: rgb(140, 222, 255);
     box-shadow: inset 2px 2px 10px rgb(94, 157, 182);
+}
+
+#clear.pressed {
+    background-color: rgb(238, 116, 116);
+    box-shadow: inset 2px 2px 10px rgb(182, 94, 94);
+}
+
+#equal.pressed {
+    background-color: rgb(115, 235, 131);
+    box-shadow: inset 2px 2px 10px rgb(64, 161, 77);
+    ;
 }
